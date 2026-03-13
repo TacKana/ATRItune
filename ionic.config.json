@@ -1,0 +1,7 @@
+{
+  "name": "ATRItune",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
