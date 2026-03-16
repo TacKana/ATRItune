@@ -19,14 +19,15 @@ export async function useTuner() {
   const source = audioContext.createMediaStreamSource(stream);
   // 4. 创建分析器
   const analyser = audioContext.createAnalyser();
-  analyser.fftSize = 2048; // 设置 FFT 大小，影响分析精度和频率分辨率
-  // analyser.smoothingTimeConstant = 0.1; // 设置平滑时间常量，影响分析的响应速度
+  analyser.fftSize = 4096; // 设置 FFT 大小，影响分析精度和频率分辨率
+  analyser.smoothingTimeConstant = 0.3; // 设置平滑时间常量，影响分析的响应速度
   source.connect(analyser);
   // 5. 创建缓冲区
   const buffer = new Float32Array(analyser.fftSize);
   const detectPitch = AMDF({
-    minFrequency: 50,
-    maxFrequency: 5000,
+    minFrequency: 65,
+    maxFrequency: 2093,
+    sampleRate: audioContext.sampleRate,
   });
 
 
