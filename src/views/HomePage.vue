@@ -1,33 +1,29 @@
 <template>
   <ion-page class="ion-padding-horizontal">
     <ion-content :fullscreen="true">
-      <div class="flex">
-        <div class="">
-          <!-- 顶部内容 -->
-          <h2>概览</h2>
-          <p>这里是顶部区域，高度根据内容自适应</p>
-        </div>
-        <div class="">
-          <!-- 底部内容，可滚动 -->
-          <ion-list>
-            <ion-item *ngFor="let item of items">66</ion-item>
-          </ion-list>
-        </div>
+      <!-- 调音器 -->
+      <div class="bg-red w-[100%] h-xs flex items-end justify-center">
+        <!-- 指针 -->
+        <div
+          class="needle bg-emerald w-1 h-60 origin-bottom"
+          :style="{ rotate: rotate + 'deg' }"
+        ></div>
+      </div>
+      <div class="bg-amber w-auto h-20 flex items-center justify-center">
+        A3
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
-import {
-  IonContent,
-  // IonHeader,
-  IonPage,
-  IonList,
-  IonItem,
-  // IonTitle,
-  // IonToolbar,
-} from "@ionic/vue";
+import { IonContent, IonPage } from "@ionic/vue";
+import { ref } from "vue";
+import { useTuner } from "@/composables/useTuner";
+
+const rotate = ref(0);
+
+useTuner();
 </script>
 
 <style lang="scss" scoped>
