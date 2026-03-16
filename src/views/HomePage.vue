@@ -40,6 +40,8 @@ const needleStyle = computed(() => {
   const angle = (limitedDeviation / 50) * 80;
   return {
     transform: `translateX(-50%) rotate(${angle}deg)`,
+    "transition-property": "transform",
+    "transition-duration": "0.3s",
   };
 });
 </script>
