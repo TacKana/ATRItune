@@ -1,7 +1,8 @@
 import { AMDF } from 'pitchfinder';
 
 
-export async function useTuner() {
+// 调音音高检测
+export async function useTuner(callback: (res: { noteName: string; deviation: number; }) => void) {
   let stream: MediaStream | null = null
   try {
     // 1.  请求麦克风权限并获取音频流
@@ -59,8 +60,26 @@ export async function useTuner() {
     // 过滤噪音
 
     if (pitch) {
-      console.log(pitch.toFixed(2))
+      const noteName = frequencyToNoteName(pitch)
+      callback(noteName)
     }
   };
   requestAnimationFrame(analyzePitch)
+}
+
+function frequencyToNoteName(frequency: number): { noteName: string; deviation: number; } {
+  const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  const A4 = 440;
+  // 修正公式：使用正确的12平均律计算
+  const noteNumber = 12 * Math.log2(frequency / A4) + 69;
+  const noteName = noteNames[Math.round(noteNumber) % 12];
+  // 计算音分偏差
+  const deviation = (noteNumber - Math.round(noteNumber)) * 100
+
+  const octave = Math.floor(Math.round(noteNumber) / 12) - 1; // 调整八度
+  return {
+    noteName: `${noteName}${octave}`,
+    deviation
+  }
+
 }
