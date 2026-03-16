@@ -53,7 +53,13 @@ export async function useTuner(callback: (res: { noteName: string; deviation: nu
     // 音量阈值 - 需要根据实际环境调整
     const volumeThreshold = 0.02;
 
-    if (rms < volumeThreshold) return; // 音量太小
+    if (rms < volumeThreshold) {
+      callback({
+        noteName: "---",
+        deviation: 0
+      })
+      return
+    }; // 音量太小
 
 
     const pitch = detectPitch(buffer);

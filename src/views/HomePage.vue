@@ -22,7 +22,7 @@ import { computed, ref } from "vue";
 import { useTuner } from "@/composables/useTuner";
 
 // 音名
-const noteName = ref("");
+const noteName = ref("---");
 const deviation = ref(0); // 音分偏差
 
 useTuner((res) => {
@@ -37,7 +37,7 @@ const needleStyle = computed(() => {
   const limitedDeviation = Math.max(-50, Math.min(50, deviation.value));
   // 将音分偏差映射到角度（-30度到30度）
   // 0音分对应0度，±50音分对应±30度
-  const angle = (limitedDeviation / 50) * 30;
+  const angle = (limitedDeviation / 50) * 80;
   return {
     transform: `translateX(-50%) rotate(${angle}deg)`,
   };
