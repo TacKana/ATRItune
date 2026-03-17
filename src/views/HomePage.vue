@@ -8,9 +8,14 @@
           class="needle bg-emerald w-1 h-60 origin-bottom"
           :style="needleStyle"
         ></div>
+        <div
+          class="absolute bg-emerald w-30 h15 rounded-[100px_100px_0px_0px] flex items-center justify-center"
+        >
+          {{ pitch }}Hz
+        </div>
       </div>
       <div class="bg-amber w-auto h-20 flex items-center justify-center">
-        {{ noteName }}
+        <div class="">{{ noteName }}</div>
       </div>
     </ion-content>
   </ion-page>
@@ -24,10 +29,12 @@ import { useTuner } from "@/composables/useTuner";
 // 音名
 const noteName = ref("---");
 const deviation = ref(0); // 音分偏差
+const pitch = ref(0); // 音高
 
 useTuner((res) => {
   noteName.value = res.noteName;
   deviation.value = res.deviation;
+  pitch.value = res.pitch;
 });
 
 // 控制指针旋转角度

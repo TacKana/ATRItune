@@ -2,7 +2,7 @@ import { AMDF } from 'pitchfinder';
 
 
 // 调音音高检测
-export async function useTuner(callback: (res: { noteName: string; deviation: number; }) => void) {
+export async function useTuner(callback: (res: { noteName: string; deviation: number; pitch: number }) => void) {
   let stream: MediaStream | null = null
   try {
     // 1.  请求麦克风权限并获取音频流
@@ -35,7 +35,7 @@ export async function useTuner(callback: (res: { noteName: string; deviation: nu
   // 性能优化相关
 
   let lastUpdateTime = 0;
-  const UPDATE_INTERVAL = 100; // 100ms 更新一次 UI（每秒10次，对人眼足够）
+  const UPDATE_INTERVAL = 150; // 15ms 更新一次 UI
 
   // 6. 分析音频数据
   const analyzePitch = (time: number) => {
@@ -60,7 +60,8 @@ export async function useTuner(callback: (res: { noteName: string; deviation: nu
     if (rms < volumeThreshold) {
       callback({
         noteName: "---",
-        deviation: 0
+        deviation: 0,
+        pitch: 0
       })
       return
     }; // 音量太小
@@ -70,8 +71,13 @@ export async function useTuner(callback: (res: { noteName: string; deviation: nu
     // 过滤噪音
 
     if (pitch) {
-      const noteName = frequencyToNoteName(pitch)
-      callback(noteName)
+      const pitchNum = Number(pitch.toFixed(2))
+      const noteName = frequencyToNoteName(pitchNum)
+      callback({
+        noteName: noteName.noteName,
+        deviation: noteName.deviation,
+        pitch: pitchNum
+      })
     }
   };
   requestAnimationFrame(analyzePitch)
