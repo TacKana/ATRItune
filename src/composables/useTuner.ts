@@ -32,15 +32,19 @@ export async function useTuner(callback: (res: { noteName: string; deviation: nu
   });
 
 
-  let lastTime = 0
-  const interval = 50
+  // 性能优化相关
+
+  let lastUpdateTime = 0;
+  const UPDATE_INTERVAL = 100; // 100ms 更新一次 UI（每秒10次，对人眼足够）
 
   // 6. 分析音频数据
   const analyzePitch = (time: number) => {
     requestAnimationFrame(analyzePitch)
     // 节流器
-    if (time - lastTime < interval) return
-    lastTime = time
+    if (time - lastUpdateTime < UPDATE_INTERVAL) {
+      return
+    }
+    lastUpdateTime = time
 
     analyser.getFloatTimeDomainData(buffer);
     // 1. 音量过滤 - 计算RMS能量
