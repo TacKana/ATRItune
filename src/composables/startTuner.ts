@@ -3,7 +3,7 @@ import { YIN } from 'pitchfinder';
 
 // 调音音高检测
 export async function startTuner(callback: (res: { noteName: string; deviation: number; pitch: number }) => void) {
-  const SampleRate = 44100, FftSize = 4096 // 采样率, FFT 大小
+  const FftSize = 4096 // 采样率, FFT 大小
 
   let stream: MediaStream | null = null
   try {
@@ -13,9 +13,6 @@ export async function startTuner(callback: (res: { noteName: string; deviation: 
         echoCancellation: false,
         noiseSuppression: false,
         autoGainControl: false,
-        channelCount: 1,
-        sampleRate: SampleRate,
-        sampleSize: 16
       }
     })
   } catch (error) {

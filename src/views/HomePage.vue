@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from "@ionic/vue";
 import { computed, ref } from "vue";
-import { startTuner } from "@/composables/useTuner";
+import { startTuner } from "@/composables/startTuner";
 
 // 音名
 const noteName = ref("---");
@@ -48,7 +48,7 @@ const needleStyle = computed(() => {
   return {
     transform: `translateX(-50%) rotate(${angle}deg)`,
     "transition-property": "transform",
-    "transition-duration": "0.5s",
+    "transition-duration": "0.6s",
   };
 });
 </script>
