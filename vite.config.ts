@@ -20,5 +20,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom'
+  },
+  server: {
+    host: true,
+    https: {
+      key: "./cert/private.key",
+      cert: "./cert/cert.pem"
+    }
   }
 })
