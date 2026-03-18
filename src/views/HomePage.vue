@@ -24,14 +24,14 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from "@ionic/vue";
 import { computed, ref } from "vue";
-import { useTuner } from "@/composables/useTuner";
+import { startTuner } from "@/composables/useTuner";
 
 // 音名
 const noteName = ref("---");
 const deviation = ref(0); // 音分偏差
 const pitch = ref(0); // 音高
 
-useTuner((res) => {
+startTuner((res) => {
   noteName.value = res.noteName;
   deviation.value = res.deviation;
   pitch.value = res.pitch;
@@ -48,7 +48,7 @@ const needleStyle = computed(() => {
   return {
     transform: `translateX(-50%) rotate(${angle}deg)`,
     "transition-property": "transform",
-    "transition-duration": "0.3s",
+    "transition-duration": "0.5s",
   };
 });
 </script>
