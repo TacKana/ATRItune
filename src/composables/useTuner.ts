@@ -7,7 +7,11 @@ export async function useTuner(callback: (res: { noteName: string; deviation: nu
   try {
     // 1.  请求麦克风权限并获取音频流
     stream = await navigator.mediaDevices.getUserMedia({
-      audio: true
+      audio: {
+        echoCancellation: false,
+        noiseSuppression: false,
+        autoGainControl: false
+      }
     })
   } catch (error) {
     console.error('获取麦克风权限失败:', error);
